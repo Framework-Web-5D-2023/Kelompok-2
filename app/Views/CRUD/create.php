@@ -1,7 +1,14 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-
-<h1><?= $tittle; ?></h1>
+<div class="container">
+    <h1><?= $title; ?></h1>
+    <?php if (session()->has('validation_errors')) : ?>
+        <div class="alert alert-danger" role="alert">
+            <?php foreach (session('validation_errors') as $error) : ?>
+                <?= esc($error) ?><br>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 <form action="<?= base_url("/create")?>" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="judul" class="form-label">Judul</label>

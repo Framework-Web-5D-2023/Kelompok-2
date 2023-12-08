@@ -31,9 +31,9 @@ class Home extends BaseController
     public function halamanCreate()
     {
         $data = [
-            "tittle" => "Halaman Create"
+            "title" => "Halaman Create"
         ];
-        return view('/CRUD/create',$data);
+        return view('/CRUD/create', $data);
     }
     public function crud(): string
     {
@@ -46,6 +46,37 @@ class Home extends BaseController
     }
     public function createBook()
     {
+        $validation = \Config\Services::validation();
+        //dd($validation);
+        $errors = $validation->getErrors();
+        $data = [
+            "title" => "Create Buku",
+            "book" => $book,
+            "errors" => $errors,
+            'validation' => $validation
+        ];
+        return view("CRUD/create", $data);
+    }
+    public function createBookAction()
+    {
+        if (!$this->validate([
+            'judul' => [
+                'rules' => 'required|is_unique[buku.judul,id,{id}]',
+                'errors' => [
+                    'required' => 'Judul harus diisi.',
+                    'is_unique' => 'Judul sudah digunakan.'
+                ]
+            ],
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun_terbit' => 'required',
+            'sinopsis' => 'required',
+            'path' => 'required',
+            'status_premium' => 'required',
+            'sampul' => 'required'
+        ])) {
+            return redirect()->to(base_url("halamanCreate/"))->withInput()->with('validation_errors', $this->validator->getErrors());
+        }
         // ambil gambar
         $fileImage = $this->request->getFile('sampul');
         if ($fileImage->getError() == 4) {
@@ -76,24 +107,12 @@ class Home extends BaseController
         ];
 
         $this->detailModel->insert($data);
-        //$this->session->setFlashData("success", "Mahasiswa has been added");
         return redirect()->to(base_url("halamanCreate"));
     }
     public function deleteBook($id)
     {
         $this->detailModel->delete($id);
         return redirect()->to(base_url("/crud"));
-    }
-    public function updateBook($id)
-    {
-        $book = $this->detailModel->getDetailBook($id);
-
-        $data = [
-            "title" => "Update Buku",
-            "book" => $book,
-            //'validation' => \Config\Services::validation()
-        ];
-        return view("CRUD/update", $data);
     }
 
     public function detailBuku($id)
@@ -105,6 +124,20 @@ class Home extends BaseController
         ];
         return view('CRUD/detail', $data);
     }
+    public function updateBook($id)
+    {
+        $book = $this->detailModel->getDetailBook($id);
+        $validation = \Config\Services::validation();
+        //dd($validation);
+        $errors = $validation->getErrors();
+        $data = [
+            "title" => "Update Buku",
+            "book" => $book,
+            "errors" => $errors,
+            'validation' => $validation
+        ];
+        return view("CRUD/update", $data);
+    }
     public function updateBookAction($id)
     {
         $judul = $this->request->getVar("judul");
@@ -115,22 +148,26 @@ class Home extends BaseController
         $path = $this->request->getVar("path");
         $status_premium = $this->request->getVar("status_premium");
         $sampul = $this->request->getVar("sampul");
-        // if (!$this->validate([
-        //   'nama' => [
-        //     'rules' => 'required|is_unique[mahasiswa.nama]',
-        //     'error' => [
-        //       'required' => '{field} must been inputed form',
-        //       'is_unique' => 'sudah digunakan',
-        //     ]
-        //   ],
-        //   'npm' => 'required',
-        //   'prodi' => 'required',
-        //   'minat' => 'required',
-        //   'domisili' => 'required',
-        //   'jenis_kelamin' => 'required'
-        // ])) {
-        //   return redirect()->to(base_url("updateMahasiswa/" . $id))->withInput();
-        // }
+
+        if (!$this->validate([
+            'judul' => [
+                'rules' => 'required|is_unique[buku.judul,id,{id}]',
+                'errors' => [
+                    'required' => 'Judul harus diisi.',
+                    'is_unique' => 'Judul sudah digunakan.'
+                ]
+            ],
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun_terbit' => 'required',
+            'sinopsis' => 'required',
+            'path' => 'required',
+            'status_premium' => 'required',
+            'sampul' => 'required'
+        ])) {
+            return redirect()->to(base_url("updateBook/" . $id))->withInput()->with('validation_errors', $this->validator->getErrors());
+        }
+        
 
         $data = [
             "judul" => $judul,
@@ -144,8 +181,6 @@ class Home extends BaseController
         ];
 
         $this->detailModel->updateBook($id, $data);
-        //$this->session->setFlashData("success", "Mahasiswa has been updated");
         return redirect()->to(base_url("updateBook/" . $id));
-
     }
 }

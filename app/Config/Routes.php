@@ -27,10 +27,13 @@ $routes->post('/uploadstruk', 'Order::uploadStruk');
 
 //crud
 $routes->get('/crud', 'Home::crud');
-$routes->get('/halamanCreate', 'Home::halamanCreate');
-$routes->post('/create', 'Home::createBook');
 $routes->get('/(:num)', 'Home::detailBuku/$1');
+
+$routes->get('/halamanCreate', 'Home::halamanCreate');
+$routes->post('/create', 'Home::createBookAction');
+
 $routes->get('/updateBook/(:num)', 'Home::updateBook/$1');
 $routes->post('/updateBook/update/(:num)', 'Home::updateBookAction/$1');
+
 $routes->get('/delete/(:num)', 'Home::deleteBook/$1');
 
