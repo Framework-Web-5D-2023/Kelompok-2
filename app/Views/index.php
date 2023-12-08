@@ -127,7 +127,7 @@
                     echo '<div class="col-md-6 col-lg-4">
             <div class="box">
                 <div class="img-box">
-                    <img src="' . $item["sampul"] . '" alt="' . $item["judul"] . '">
+                    <img src="/covers/'. $item["sampul"] . '" alt="' . $item["judul"] . '">
                 </div>
                 <div class="detail-box">
                     <h5>' . $item["judul"] . '</h5>

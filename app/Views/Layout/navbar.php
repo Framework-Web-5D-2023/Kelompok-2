@@ -25,6 +25,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crud">CRUD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="halamanCreate">Create</a>
+                    </li>
                 </ul>
             </div>
         </nav>
