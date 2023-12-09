@@ -27,10 +27,24 @@ $routes->post('/uploadstruk', 'Order::uploadStruk');
 
 //crud
 $routes->get('/crud', 'Home::crud');
+$routes->get('detail/(:num)', 'Home::detailBuku/$1');
+
 $routes->get('/halamanCreate', 'Home::halamanCreate');
-$routes->post('/create', 'Home::createBook');
-$routes->get('/(:num)', 'Home::detailBuku/$1');
-$routes->get('/updateBook/(:num)', 'Home::updateBook/$1');
-$routes->post('/updateBook/update/(:num)', 'Home::updateBookAction/$1');
-$routes->get('/delete/(:num)', 'Home::deleteBook/$1');
+$routes->post('/create', 'Crud::createBookAction');
+
+$routes->get('updateBook/(:num)', 'Crud::updateBook/$1');
+$routes->post('/updateBook/update/(:num)', 'Crud::updateBookAction/$1');
+
+$routes->get('/delete/(:num)', 'Crud::deleteBook/$1');
+
+$routes->get('search', 'Crud::search');
+
+
+//pdf reader
+$routes->get('/read/(:any)', 'Home::pdfReader/$1');
+
+//membership
+$routes->get('/membership', 'Membership::index');
+$routes->post('/belimembership', 'Membership::beliMembership');
+$routes->get('/alltransaction', 'Membership::showTransaction');
 

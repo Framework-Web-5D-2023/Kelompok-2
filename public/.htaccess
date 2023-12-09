@@ -44,6 +44,19 @@ Options -Indexes
 	ErrorDocument 404 index.php
 </IfModule>
 
+Block access to specific file types
+<FilesMatch "\.(pdf|jpg|db|ini|log|sh|inc|bak|swp|dist|fla|xml|conf|dist|inc|old|orig|psd|cmd|bat|sql|sqlite)$">
+	Order deny,allow
+	Deny from all
+</FilesMatch>
+
+# Block access to specific directories
+<DirectoryMatch "(\.git|\.svn|\.vscode)">
+	Order deny,allow
+	Deny from all
+</DirectoryMatch>
+</IfModule>
+
 # Disable server signature start
 	ServerSignature Off
 # Disable server signature end

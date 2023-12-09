@@ -14,22 +14,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?=base_url("/");?>">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/product">Koleksi Buku</a>
+                        <a class="nav-link" href="<?=base_url("/product");?>">Koleksi Buku</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/orderlist">Membership</a>
+                        <a class="nav-link" href="<?=base_url("/membership");?>">Membership</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link" href="<?=base_url("/about");?>">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/crud">CRUD</a>
+                        <a class="nav-link" href="<?=base_url("/crud");?>">CRUD</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="halamanCreate">Create</a>
+                    <li class="nav-item"></li>
+                        <a class="nav-link" href="<?=base_url("/halamanCreate");?>">Create</a>
                     </li>
                 </ul>
             </div>

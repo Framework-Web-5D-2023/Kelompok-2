@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dzikrizop</title>
+    <title><?= isset($tittle) ? $tittle : 'SukaBaca'; ?></title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.css"); ?>">
@@ -59,6 +59,7 @@
 <body>
     <br><br>
     <?= $this->include("layout/navbar"); ?>
+    <br><br>
     <?= $this->renderSection('content') ?>
 
     <!-- Your scripts should be placed at the end of the body for better performance -->

@@ -17,7 +17,7 @@
                                 <h6 class="price_heading">
                                     <span> ' . $item["pengarang"] . '</span>
                                 </h6>
-                                <a href="/order/' . $item['id_buku'] . '">Baca Sekarang</a>
+                                <a href="/read/' . $item['path'] . '">Baca Sekarang</a>
                             </div>
                         </div>
                     </div>
