@@ -4,12 +4,11 @@
 <div class="container mt-4">
     <!-- Search Form -->
     <div class="input-group mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Search by ID Buku">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by ID Buku" aria-label="Search">
         <button id="searchBtn" class="btn btn-primary">Search</button>
     </div>
 
     <table class="table table-bordered caption-top">
-
         <thead class="table-dark">
             <tr>
                 <th scope="col">Image</th>
@@ -49,11 +48,24 @@
     $(document).ready(function () {
         // Search Button Click Event
         $('#searchBtn').on('click', function () {
+            performSearch();
+        });
+
+        // Debounce Search Input
+        var debounceTimer;
+        $('#searchInput').on('input', function () {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                performSearch();
+            }, 300);
+        });
+
+        function performSearch() {
             var searchTerm = $('#searchInput').val().toLowerCase();
 
             // Loop through each row in the table
             $('tbody tr').each(function () {
-                var bookId = $(this).find('td:nth-child(5)').text().toLowerCase(); // Adjust this based on the column index
+                var bookId = $(this).find('td:nth-child(4)').text().toLowerCase(); // Adjust this based on the column index
 
                 // Check if the book ID contains the search term
                 if (bookId.includes(searchTerm)) {
@@ -62,7 +74,12 @@
                     $(this).hide();
                 }
             });
-        });
+
+            // Show message when there are no results
+            if ($('tbody tr:visible').length === 0) {
+                // Display a message, e.g., $('#noResultsMessage').show();
+            }
+        }
     });
 </script>
 
