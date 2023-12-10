@@ -8,26 +8,27 @@
         </div>
         <div class="row" id="bookList">
 
-            <?php
-            foreach ($data as $item) {
-                echo '<div class="col-md-6 col-lg-4">
+            <?php foreach ($data as $item): ?>
+                <div class="col-md-6 col-lg-4">
                     <div class="box">
                         <div class="img-box">
-                            <img src="covers/' . $item["sampul"] . '" alt="' . $item["judul"] . '">
+                            <img src="covers/<?= $item['sampul']; ?>" alt="<?= $item['judul']; ?>">
                         </div>
                         <div class="detail-box">
-                            <h5>' . $item["judul"] . '</h5>
+                            <h5><?= $item['judul']; ?></h5>
                             <div class="price_box">
                                 <h6 class="price_heading">
-                                    <span> ' . $item["pengarang"] . '</span>
+                                    <span><?= $item['pengarang']; ?></span>
                                 </h6>
-                                <a href="/read/' . $item['path'] . '">Baca Sekarang</a>
+                                <form action="/read" method="post" class="read-form">
+                                    <input type="hidden" name="path" value="<?= $item['path']; ?>">
+                                    <button type="submit" class="btn btn-warning" style="background-color: #ff9444;">Baca Buku</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>';
-            }
-            ?>
+                </div>
+            <?php endforeach; ?>
 
         </div>
     </div>

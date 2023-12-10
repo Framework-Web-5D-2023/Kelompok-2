@@ -120,30 +120,33 @@
         </div>
         <div class="row">
 
-            <?php
-            $i = 0;
-            foreach ($data as $item) {
-                if ($i < 3) {
-                    echo '<div class="col-md-6 col-lg-4">
-            <div class="box">
-                <div class="img-box">
-                    <img src="/covers/'. $item["sampul"] . '" alt="' . $item["judul"] . '">
-                </div>
-                <div class="detail-box">
-                    <h5>' . $item["judul"] . '</h5>
-                    <div class="price_box">
-                        <h6 class="price_heading">
-                            <span> ' . $item["pengarang"] . '</span>
-                        </h6>
-                        <a href="/read/' . $item['path'] . '">Baca Sekarang</a>
+        <?php $i =0;
+        foreach ($data as $item): 
+        if($i<3):
+        ?>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box">
+                        <div class="img-box">
+                            <img src="covers/<?= $item['sampul']; ?>" alt="<?= $item['judul']; ?>">
+                        </div>
+                        <div class="detail-box">
+                            <h5><?= $item['judul']; ?></h5>
+                            <div class="price_box">
+                                <h6 class="price_heading">
+                                    <span><?= $item['pengarang']; ?></span>
+                                </h6>
+                                <form action="/read" method="post" class="read-form">
+                                    <input type="hidden" name="path" value="<?= $item['path']; ?>">
+                                    <button type="submit" class="btn btn-warning" style="background-color: #ff9444;">Baca Buku</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>';
-                    $i++; // Tambahkan 1 ke variabel penanda jumlah item yang sudah ditampilkan
-                }
-            }
-            ?>
+            <?php 
+        $i++;    
+        endif;
+        endforeach; ?>
 
 
 

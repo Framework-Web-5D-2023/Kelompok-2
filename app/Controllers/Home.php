@@ -64,8 +64,9 @@ class Home extends BaseController
         return view('CRUD/detail', $data);
     }
 
-    public function pdfReader($path)
+    public function pdfReader()
     {
+        $path = $this->request->getVar("path");
         $data = [
             'path' => $path,
             'title' => 'Halaman Buku',

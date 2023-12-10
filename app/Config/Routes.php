@@ -41,7 +41,7 @@ $routes->get('search', 'Crud::search');
 
 
 //pdf reader
-$routes->get('/read/(:any)', 'Home::pdfReader/$1');
+$routes->post('/read', 'Home::pdfReader');
 
 //membership
 $routes->get('/membership', 'Membership::index');
