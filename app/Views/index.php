@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="img-box">
-                                    <img src="assets/images/slider-img.png" alt="">
+                                    <img src="<?= base_url('assets/images/slider-img.png');?>" alt="">
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="img-box">
-                                    <img src="assets/images/slider-img.png" alt="">
+                                    <img src="<?= base_url('assets/images/slider-img.png');?>" alt="">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="img-box">
-                                    <img src="assets/images/slider-img.png" alt="">
+                                    <img src="<?= base_url('assets/images/slider-img.png');?>" alt="">
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="box">
                         <div class="img-box">
-                            <img src="covers/<?= $item['sampul']; ?>" alt="<?= $item['judul']; ?>">
+                            <img src="<?= base_url('covers/');?><?= $item['sampul']; ?>" alt="<?= $item['judul']; ?>">
                         </div>
                         <div class="detail-box">
                             <h5><?= $item['judul']; ?></h5>
