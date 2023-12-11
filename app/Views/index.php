@@ -146,7 +146,7 @@
 
                                     </h6>
                                     <form action="/read" method="post" class="read-form">
-                                        <input type="hidden" name="path" value="<?= $item['path']; ?>">
+                                        <input type="hidden" name="id_buku" value="<?= $item['id_buku']; ?>">
                                         <button type="submit" class="btn btn-warning" style="background-color: #ff9444;">Baca
                                             Buku</button>
                                     </form>

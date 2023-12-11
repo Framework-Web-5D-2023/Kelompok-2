@@ -11,6 +11,7 @@ class TransaksiModel extends Model
     protected $allowedFields = ['id_user', 'id_membership', 'harga'];
     protected $useTimestamp = true;
 
+
     public function allTransaction(){
         return $this->findAll();
         

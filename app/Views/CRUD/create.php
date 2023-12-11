@@ -1,10 +1,17 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
 <div class="container">
+    <?php if (session()->has('added')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Buku Berhasil ditambahkan</strong> periksa kembali untuk memastikan tidak ada kesalahan
+        </div>
+    <?php endif; ?>
     <form action="<?= base_url("/create") ?>" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="judul" class="form-label">Judul</label>
-            <input type="text" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['judul']) ? 'is-invalid' : ''; ?>" id="judul" name="judul" placeholder="Inputkan Nama..." value="<?= old('judul') ?>">
+            <input type="text"
+                class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['judul']) ? 'is-invalid' : ''; ?>"
+                id="judul" name="judul" placeholder="Inputkan Nama..." value="<?= old('judul') ?>">
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['judul'])): ?>
                 <div class="invalid-feedback">
                     <?= session('validation_errors')['judul']; ?>
@@ -14,7 +21,10 @@
 
         <div class="mb-3">
             <label for="judul" class="form-label">Pengaranng</label>
-            <input type="text" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['pengarang']) ? 'is-invalid' : ''; ?>" id="pengarang" name="pengarang" placeholder="Inputkan Nama Pengarang..." value="<?= old('pengarang') ?>">
+            <input type="text"
+                class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['pengarang']) ? 'is-invalid' : ''; ?>"
+                id="pengarang" name="pengarang" placeholder="Inputkan Nama Pengarang..."
+                value="<?= old('pengarang') ?>">
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['pengarang'])): ?>
                 <div class="invalid-feedback">
                     <?= session('validation_errors')['pengarang']; ?>
@@ -25,7 +35,9 @@
         <!-- Field Penerbit -->
         <div class="mb-3">
             <label for="penerbit" class="form-label">Penerbit</label>
-            <input type="text" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['penerbit']) ? 'is-invalid' : ''; ?>" id="penerbit" name="penerbit" placeholder="Inputkan Penerbit..." value="<?= old('penerbit') ?>">
+            <input type="text"
+                class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['penerbit']) ? 'is-invalid' : ''; ?>"
+                id="penerbit" name="penerbit" placeholder="Inputkan Penerbit..." value="<?= old('penerbit') ?>">
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['penerbit'])): ?>
                 <div class="invalid-feedback">
                     <?= session('validation_errors')['penerbit']; ?>
@@ -36,7 +48,10 @@
         <!-- Field Tahun Terbit -->
         <div class="mb-3">
             <label for="tahun_terbit" class="form-label">Tahun Terbit</label>
-            <input type="text" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['tahun_terbit']) ? 'is-invalid' : ''; ?>" id="tahun_terbit" name="tahun_terbit" placeholder="Inputkan Tahun Terbit..." value="<?= old('tahun_terbit') ?>">
+            <input type="text"
+                class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['tahun_terbit']) ? 'is-invalid' : ''; ?>"
+                id="tahun_terbit" name="tahun_terbit" placeholder="Inputkan Tahun Terbit..."
+                value="<?= old('tahun_terbit') ?>">
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['tahun_terbit'])): ?>
                 <div class="invalid-feedback">
                     <?= session('validation_errors')['tahun_terbit']; ?>
@@ -48,7 +63,9 @@
 
         <div class="mb-3">
             <label for="sinopsis" class="form-label">Sinopsis</label>
-            <textarea class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['sinopsis']) ? 'is-invalid' : ''; ?>" id="sinopsis" name="sinopsis" placeholder="Inputkan sinopsis..."><?= old('sinopsis') ?></textarea>
+            <textarea
+                class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['sinopsis']) ? 'is-invalid' : ''; ?>"
+                id="sinopsis" name="sinopsis" placeholder="Inputkan sinopsis..."><?= old('sinopsis') ?></textarea>
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['sinopsis'])): ?>
                 <div class="invalid-feedback">
                     <?= session('validation_errors')['sinopsis']; ?>
@@ -61,7 +78,8 @@
         <div class="mb-3">
             <label for="status_premium" class="form-label">Status Premium</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="status_premium" name="status_premium" value="1" <?= old('status_premium') ? 'checked' : '' ?>>
+                <input type="checkbox" class="form-check-input" id="status_premium" name="status_premium" value="1"
+                    <?= old('status_premium') ? 'checked' : '' ?>>
                 <label class="form-check-label" for="status_premium">Premium</label>
             </div>
             <?php if (session()->has('validation_errors') && isset(session('validation_errors')['status_premium'])): ?>
@@ -76,7 +94,9 @@
         <div class="col-sm-12 mb-3">
             <div class="form-group">
                 <label for="pdfFile">PDF File</label>
-                <input type="file" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['pdfFile']) ? 'is-invalid' : ''; ?>" id="pdfFile" name="pdfFile" accept=".pdf">
+                <input type="file"
+                    class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['pdfFile']) ? 'is-invalid' : ''; ?>"
+                    id="pdfFile" name="pdfFile" accept=".pdf">
                 <?php if (session()->has('validation_errors') && isset(session('validation_errors')['pdfFile'])): ?>
                     <div class="invalid-feedback">
                         <?= session('validation_errors')['pdfFile']; ?>
@@ -90,7 +110,9 @@
         <div class="col-sm-12 mb-3">
             <div class="form-group">
                 <label for="sampul">Image</label>
-                <input type="file" class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['sampul']) ? 'is-invalid' : ''; ?>" id="sampul" name="sampul" accept="image/*">
+                <input type="file"
+                    class="form-control <?= session()->has('validation_errors') && isset(session('validation_errors')['sampul']) ? 'is-invalid' : ''; ?>"
+                    id="sampul" name="sampul" accept="image/*">
                 <?php if (session()->has('validation_errors') && isset(session('validation_errors')['sampul'])): ?>
                     <div class="invalid-feedback">
                         <?= session('validation_errors')['sampul']; ?>

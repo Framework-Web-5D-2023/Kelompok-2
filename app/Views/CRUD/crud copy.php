@@ -4,19 +4,12 @@
 <div class="container mt-4">
     <?php if (session()->has('updated')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Buku Berhasil diupdate</strong> periksa kembali untuk memastikan tidak ada kesalahan
+            <strong>Buku Berhasil ditambahkan</strong> periksa kembali untuk memastikan tidak ada kesalahan
         </div>
     <?php endif; ?>
-
-    <?php if (session()->has('deleted')): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Buku Berhasil dihapus</strong> periksa kembali untuk memastikan tidak ada kesalahan
-        </div>
-    <?php endif; ?>
-
     <!-- Search Form -->
     <div class="input-group mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Search by Judul Buku" aria-label="Search">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by ID Buku" aria-label="Search">
         <button id="searchBtn" class="btn btn-primary">Search</button>
     </div>
 
@@ -48,8 +41,7 @@
                         <?= $buku["id_buku"]; ?>
                     </td>
                     <td>
-                        <a href="<?= base_url("delete/" . $buku["id_buku"]); ?>" class="btn btn-danger btn-sm"
-                            onclick="return confirmDelete();">Delete</a>
+                        <a href="<?= base_url("delete/" . $buku["id_buku"]); ?>" class="btn btn-danger btn-sm">Delete</a>
                         <a href="<?= base_url("/detail/" . $buku["id_buku"]); ?>" class="btn btn-primary btn-sm">Detail</a>
                         <a href="<?= base_url("updateBook/" . $buku["id_buku"]); ?>"
                             class="btn btn-primary btn-sm">Update</a>
@@ -61,13 +53,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-    function confirmDelete() {
-        return confirm('Apakah Anda yakin ingin menghapus buku ini?');
-    }
-</script>
-
 <script>
     $(document).ready(function () {
         // Search Button Click Event
@@ -89,10 +74,10 @@
 
             // Loop through each row in the table
             $('tbody tr').each(function () {
-                var bookTitle = $(this).find('td:nth-child(2)').text().toLowerCase(); // Adjust this based on the column index
+                var bookId = $(this).find('td:nth-child(4)').text().toLowerCase(); // Adjust this based on the column index
 
-                // Check if the book title contains the search term
-                if (bookTitle.includes(searchTerm)) {
+                // Check if the book ID contains the search term
+                if (bookId.includes(searchTerm)) {
                     $(this).show();
                 } else {
                     $(this).hide();

@@ -6,112 +6,96 @@ class Crud extends BaseController
 {
 
 
-    //mencari buku yang ingin di-CRUD
-    public function search()
-    {
-        $id_buku = $this->request->getGet('id_buku');
-
-        // Perform the search based on the book ID
-        $searchResult = $this->detailModel->getDetailById($id_buku);
-
-        $data = [
-            ['title' => 'Search Results',
-                'data' => $searchResult,]
-
-        ];
-
-
-        return view('CRUD/crud', $data);
-    }
 
     public function updateBook($id)
-{
-    $book = $this->detailModel->getDetailBook($id);
-    $validation = \Config\Services::validation();
-    $errors = $validation->getErrors();
-    $data = [
-        "title" => "Update Buku",
-        "book" => $book,
-        "errors" => $errors,
-        'validation' => $validation
-    ];
-    return view("CRUD/update", $data);
-}
-
-public function updateBookAction($id)
-{
-    // Validasi form
-    $validationRules = [
-        'judul' => 'required',
-        'pengarang' => 'required',
-        'penerbit' => 'required',
-        'tahun_terbit' => 'required',
-        'sinopsis' => 'required',
-        'status_premium' => 'required',
-        'pdfFile' => 'mime_in[pdfFile,application/pdf]|max_size[pdfFile,10240]|ext_in[pdfFile,pdf]',
-        'sampul' => 'mime_in[sampul,image/jpg,image/jpeg,image/png]|max_size[sampul,2048]',
-    ];
-
-    if (!$this->validate($validationRules)) {
-        return redirect()->to(base_url("updateBook/" . $id))
-            ->withInput()
-            ->with('validation_errors', $this->validator->getErrors());
+    {
+        $book = $this->detailModel->getDetailBook($id);
+        $validation = \Config\Services::validation();
+        $errors = $validation->getErrors();
+        $data = [
+            "title" => "Update Buku",
+            "book" => $book,
+            "errors" => $errors,
+            'validation' => $validation
+        ];
+        return view("CRUD/update", $data);
     }
 
-    // Ambil data dari form
-    $judul = $this->request->getVar("judul");
-    $pengarang = $this->request->getVar("pengarang");
-    $penerbit = $this->request->getVar("penerbit");
-    $tahun_terbit = $this->request->getVar("tahun_terbit");
-    $sinopsis = $this->request->getVar("sinopsis");
-    $status_premium = $this->request->getVar("status_premium");
+    public function updateBookAction($id)
+    {
+        // Validasi form
+        $validationRules = [
+            'judul' => 'required',
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun_terbit' => 'required',
+            'sinopsis' => 'required',
+            'status_premium' => 'required',
+            'pdfFile' => 'mime_in[pdfFile,application/pdf]|max_size[pdfFile,10240]|ext_in[pdfFile,pdf]',
+            'sampul' => 'mime_in[sampul,image/jpg,image/jpeg,image/png]|max_size[sampul,2048]',
+        ];
 
-    // Ambil nama file lama dari database
-    $book = $this->detailModel->getDetailBook($id);
-    $namaImageLama = $book['sampul'];
-    $namaPdfLama = $book['path'];
-
-    // Periksa apakah ada file gambar sampul yang diunggah
-    $fileImage = $this->request->getFile('sampul');
-    $namaImageBaru = $fileImage->getError() == 4 ? $namaImageLama : $fileImage->getRandomName();
-    if ($namaImageBaru !== $namaImageLama) {
-        // Pindahkan file baru dan dapatkan nama baru
-        $fileImage->move('covers', $namaImageBaru);
-
-        // Hapus file lama jika nama berbeda
-        if ($namaImageLama !== 'default.jpg') {
-            unlink('covers/' . $namaImageLama);
+        if (!$this->validate($validationRules)) {
+            return redirect()->to(base_url("updateBook/" . $id))
+                ->withInput()
+                ->with('validation_errors', $this->validator->getErrors());
         }
+
+        // Ambil data dari form
+        $judul = $this->request->getVar("judul");
+        $pengarang = $this->request->getVar("pengarang");
+        $penerbit = $this->request->getVar("penerbit");
+        $tahun_terbit = $this->request->getVar("tahun_terbit");
+        $sinopsis = $this->request->getVar("sinopsis");
+        $status_premium = $this->request->getVar("status_premium");
+
+        // Ambil nama file lama dari database
+        $book = $this->detailModel->getDetailBook($id);
+        $namaImageLama = $book['sampul'];
+        $namaPdfLama = $book['path'];
+
+        // Periksa apakah ada file gambar sampul yang diunggah
+        $fileImage = $this->request->getFile('sampul');
+        $namaImageBaru = $fileImage->getError() == 4 ? $namaImageLama : $fileImage->getRandomName();
+        if ($namaImageBaru !== $namaImageLama) {
+            // Pindahkan file baru dan dapatkan nama baru
+            $fileImage->move('covers', $namaImageBaru);
+
+            // Hapus file lama jika nama berbeda
+            if ($namaImageLama !== 'default.jpg') {
+                unlink('covers/' . $namaImageLama);
+            }
+        }
+
+        // Periksa apakah ada file PDF yang diunggah
+        $pdfFile = $this->request->getFile('pdfFile');
+        $namaPdfBaru = $pdfFile->getError() == 4 ? $namaPdfLama : $pdfFile->getRandomName();
+        if ($namaPdfBaru !== $namaPdfLama) {
+            // Pindahkan file baru dan dapatkan nama baru
+            $pdfFile->move('books', $namaPdfBaru);
+
+            // Hapus file lama jika nama berbeda
+            unlink('books/' . $namaPdfLama);
+        }
+
+        // Data untuk dimasukkan ke database
+        $data = [
+            "judul" => $judul,
+            "pengarang" => $pengarang,
+            "penerbit" => $penerbit,
+            "tahun_terbit" => $tahun_terbit,
+            "sinopsis" => $sinopsis,
+            "status_premium" => $status_premium,
+            "sampul" => $namaImageBaru,
+            "path" => $namaPdfBaru,
+        ];
+
+        // Update data ke database
+        $this->detailModel->updateBook($id, $data);
+
+        session()->setFlashdata('updated', true);
+        return redirect()->to(base_url("crud/"));
     }
-
-    // Periksa apakah ada file PDF yang diunggah
-    $pdfFile = $this->request->getFile('pdfFile');
-    $namaPdfBaru = $pdfFile->getError() == 4 ? $namaPdfLama : $pdfFile->getRandomName();
-    if ($namaPdfBaru !== $namaPdfLama) {
-        // Pindahkan file baru dan dapatkan nama baru
-        $pdfFile->move('books', $namaPdfBaru);
-
-        // Hapus file lama jika nama berbeda
-        unlink('books/' . $namaPdfLama);
-    }
-
-    // Data untuk dimasukkan ke database
-    $data = [
-        "judul" => $judul,
-        "pengarang" => $pengarang,
-        "penerbit" => $penerbit,
-        "tahun_terbit" => $tahun_terbit,
-        "sinopsis" => $sinopsis,
-        "status_premium" => $status_premium,
-        "sampul" => $namaImageBaru,
-        "path" => $namaPdfBaru,
-    ];
-
-    // Update data ke database
-    $this->detailModel->updateBook($id, $data);
-
-    return redirect()->to(base_url("updateBook/" . $id));
-}
 
 
 
@@ -250,13 +234,32 @@ public function updateBookAction($id)
 
         // Simpan data ke database
         $this->detailModel->insert($data);
+        session()->setFlashdata('added', true);
+        return view("CRUD/create", $data);
+
 
     }
 
     public function deleteBook($id)
-    {
-        $this->detailModel->delete($id);
-        return redirect()->to(base_url("/crud"));
+{
+    // Ambil data buku sebelum dihapus
+    $book = $this->detailModel->getDetailBook($id);
+
+    // Hapus file sampul jika bukan default.jpg
+    if ($book['sampul'] !== 'default.jpg') {
+        unlink('covers/' . $book['sampul']);
     }
+
+    // Hapus file PDF
+    unlink('books/' . $book['path']);
+
+    // Hapus buku dari database
+    $this->detailModel->delete($id);
+
+    // Set flashdata dan redirect
+    session()->setFlashdata('deleted', true);
+    return redirect()->to(base_url("/crud"));
+}
+
 }
 ?>

@@ -5,6 +5,17 @@ namespace App\Controllers;
 class Home extends BaseController
 {
 
+    protected $cache;
+
+    public function __construct()
+    {
+        // Menggunakan dependency injection untuk mendapatkan layanan cache
+        $this->cache = \Config\Services::cache();
+
+        // Membersihkan semua cache
+        $this->cache->clean();
+    }
+
     //halaman utama
     public function index(): string
     {
@@ -66,13 +77,34 @@ class Home extends BaseController
 
     public function pdfReader()
     {
-        $path = $this->request->getVar("path");
-        $data = [
-            'path' => $path,
-            'title' => 'Halaman Buku',
-        ];
-        return view('reader', $data);
+        $id_buku = $this->request->getPost('id_buku');
+        $result = $this->detailModel->getPathAndStatusById($id_buku);
+
+        if ($result) {
+            $path = $result['path'];
+            $data = [
+                'path' => $path,
+                'title' => 'Halaman Buku',
+            ];
+            if ($result['status_premium'] == '1' && (in_groups('admin') || in_groups('membership_user'))) {
+                return view('readerpremium', $data);
+            }else if($result['status_premium'] == '1' && !(in_groups('admin') || in_groups('membership_user'))){
+                session()->setFlashdata('nonpremium', true);
+                return view('Transaction/membership');
+
+
+            } 
+            else {
+
+                return view('reader', $data);
+            }
+
+        } else {
+            return 'id buku tidak ditemukan';
+        }
     }
+
+
 
 
 }

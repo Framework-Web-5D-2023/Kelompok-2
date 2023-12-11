@@ -59,5 +59,7 @@ abstract class BaseController extends Controller
         $this->detailModel = new \App\Models\BukuModel();
         $this->orderModel = new \App\Models\OrderModel();
         $this->transaksiModel = new \App\Models\TransaksiModel();
+        $this->usersModel = new \App\Models\UsersModel();
+
     }
 }

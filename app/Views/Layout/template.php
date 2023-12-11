@@ -13,7 +13,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?= isset($tittle) ? $tittle : 'SukaBaca'; ?></title>
+    <title>
+        <?= isset($tittle) ? $tittle : 'SukaBaca'; ?>
+    </title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.css"); ?>">
@@ -52,7 +54,12 @@
         .card-text {
             flex-grow: 1;
         }
+
+        a[href*=".pdf"] {
+            display: none;
+        }
     </style>
+
 
 </head>
 
