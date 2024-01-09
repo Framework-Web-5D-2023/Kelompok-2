@@ -1,3 +1,4 @@
+⚠️: ** Please configure the email that sends your activation code in App/Config/Email.php **
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?
